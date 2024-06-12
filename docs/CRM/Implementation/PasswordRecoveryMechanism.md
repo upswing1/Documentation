@@ -36,19 +36,14 @@ Once a token is used to reset the password, it is invalidated by removing it fro
 
 2. **User enters the Received Token**:
    - The user reads the received access code and enters it in the application.
-	- If the access code is correct, the user is redirected to the password reset form
-	- The user receives the token in an 
-		- email and clicks on the reset link.
-   - The link directs the user to an endpoint on the server, such as `/api/v1/internal/resetPwd/passwordreset/\{token\}`, where `\{token\}` is the unique token.
-   - The server extracts the token from the URL and validates it by checking the database for its existence, associated user ID, and expiration time.
-   - If the token is valid, the server redirects the user to a password reset form within the application.
+   - If the access code is correct, the user is redirected to the password reset form.
 
 3. **User Resets Password**:
    - The user enters and confirms their new password on the password reset form.
-   - The new password, along with the token, is submitted to the server.
-   - The server validates the token again and, if valid, updates the user's password in the database.
+   - The new password is submitted to the server.
    - The token is then invalidated to prevent reuse.
-   - The user receives a confirmation that their password has been successfully reset.
+   - The user receives a message confirmation that their password has been successfully reset.
+   - The user is redirected to the login page where he can now log in using the new password.
 
 This process ensures a secure and user-friendly password reset mechanism by using unique tokens to verify the identity of the user and prevent unauthorized access.
 
@@ -67,7 +62,7 @@ MailKit is used to send password reset emails containing the unique token. This 
 **1. EmailService**:
 - **Purpose**: Responsible for sending emails using MailKit.
 - **Key Methods**: 
-  - `SendPasswordResetEmailAsync`: Constructs the email message, including the password reset link, and sends it using MailKit's SMTP client.
+  - `SendPasswordResetEmailAsync`: Constructs the email message, including the authorization token, and sends it using MailKit's SMTP client.
 
 **2. TokenService**:
 - **Purpose**: Handles the generation, validation, and invalidation of tokens.

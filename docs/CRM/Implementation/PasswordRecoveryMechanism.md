@@ -25,14 +25,20 @@ Once a token is used to reset the password, it is invalidated by removing it fro
 ### Password Reset Flow
 
 1. **User Requests Password Reset**: 
-   - The user initiates a password reset by providing their registered email address.
-   - The server finds the user by email and generates a unique token.
-   - The token is stored in the database along with the user ID and expiration time.
-   - A reset link is constructed using the token, such as `http://localhost:9090/api/v1/internal/resetPwd/passwordreset/\{token\}`.
-   - The reset link is sent to the user's email address.
+   - The user initiates a password reset by choosing one of the following options:
+     - Their registered email address.
+     - A phone number where a message can be received.
+   - The server locates the user by the provided email address or phone number and generates a unique access code.
+   - The access code is stored in the database along with the user ID and expiration time.
+   - The server sends the access code via:
+     - Email to the user's registered email address.
+     - SMS to the user's registered phone number.
 
-2. **User Clicks the Reset Link**:
-   - The user receives the email and clicks on the reset link.
+2. **User enters the Received Token**:
+   - The user reads the received access code and enters it in the application.
+	- If the access code is correct, the user is redirected to the password reset form
+	- The user receives the token in an 
+		- email and clicks on the reset link.
    - The link directs the user to an endpoint on the server, such as `/api/v1/internal/resetPwd/passwordreset/\{token\}`, where `\{token\}` is the unique token.
    - The server extracts the token from the URL and validates it by checking the database for its existence, associated user ID, and expiration time.
    - If the token is valid, the server redirects the user to a password reset form within the application.

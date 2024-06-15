@@ -5,7 +5,9 @@
 
 ## Overview
 
-In many systems, the initial administrator account is created with a default password during the database seeding process. This default password must be changed upon the first login to ensure security. To enhance security and prevent various attacks, it is recommended to use a token-based mechanism for the first-time password change process.
+In the CRM application, the initial administrator account is created with a default password during the database 
+seeding process. This default password must be changed upon the first login to ensure security. To enhance security
+and prevent various attacks, we are using a token-based mechanism for the first-time password change process.
 
 ## How the Mechanism Works
 

@@ -5,9 +5,9 @@
 This document outlines the mechanism implemented in the Fleet Master application to add a user
 and describes the overall flow on how to add a user.
 
-## Initialization Mechanism
+## Adding Mechanism
 
-### Automatic Access Code Registration for First-Time Users
+### Mechanism Flow
 
 A company administrator will be able to add a driver to the system by providing the driver's "Driver license"
 and sending a request to the server to initiate the on boarding system. 
@@ -18,7 +18,7 @@ and sending a request to the server to initiate the on boarding system.
   - the account number also known as the company identifier
   - optionally the First and last name and DOB (basically the driver's info on the driver's license)
 
-Idea is to scan the driver's license and extract the information from the driver's license and send it to the server to initiate the on boarding process.
+?Idea is to scan the driver's license and extract the information from the driver's license and send it to the server to initiate the on boarding process.
 
 The FleetMasterDriverController will handle the request and double check that the license number is unique and
 

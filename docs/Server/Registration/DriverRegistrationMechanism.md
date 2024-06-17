@@ -97,4 +97,8 @@ public class RegistrationCodeService
 
 ## Conclusion
 
-By implementing a dual-code registration system, we enhance the security and manageability of driver registrations in our client-server application. The company-wide code ensures that only drivers from the specified company can register, while the driver-specific code provides an additional layer of verification, ensuring that each driver is uniquely identified and authorized to create an account. This approach balances security, simplicity, and scalability, providing a robust solution for managing driver registrations.
+By implementing a dual-code registration system, we enhance the security and manageability of driver 
+registrations in our client-server application. The company-wide code ensures that only drivers from the 
+specified company can register, while the driver-specific code provides an additional layer of verification, 
+ensuring that each driver is uniquely identified and authorized to create an account. This approach 
+balances security, simplicity, and scalability, providing a robust solution for managing driver registrations.

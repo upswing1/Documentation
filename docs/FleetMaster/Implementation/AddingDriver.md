@@ -1,11 +1,79 @@
-# Adding a driver Mechanism
+# Add Driver Mechanism
 
-## Introduction
+## Overview
 
-This document outlines the mechanism implemented in the Fleet Master application to add a user
-and describes the overall flow on how to add a user.
+To ensure a secure and efficient process for adding drivers in our client-server application, we will define the interaction between the FleetMaster app, the FleetPilot app, and the server. This document outlines the flow of the operation and specifies the expectations for each client and the server responses.
 
-## Adding Mechanism
+## Flow of Operation
+
+### Step 1: Fleet Manager Initiates Driver Addition
+
+1. **FleetMaster App**:
+   - The fleet manager opens the FleetMaster app and navigates to the "Add Driver" section.
+   - The manager enters the driver’s details (e.g., name, email, phone number) and initiates the request to add a driver.
+   (Idea is to scan the driver's license and extract the information from the driver's license and send it to the server to initiate the on boarding process.)
+
+2. **Server**:
+   - The server generates a unique company-wide registration code (if not already existing) and a driver-specific registration code.
+   - The server sends the registration codes (company-wide and driver-specific) back to the FleetMaster app.
+   - Optionally, the server can send an email or SMS to the driver with the registration codes and a link to download the FleetPilot app.
+
+3. **FleetMaster App**:
+   - The FleetMaster app displays a confirmation message with the driver’s registration code.
+   - the notification success message is displayed to the fleet manager.
+   
+
+### Step 2: Driver Registers via FleetPilot App
+
+4. **FleetPilot App**:
+   - The driver opens the FleetPilot app and navigates to the registration screen.
+   - The driver enters the company-wide registration code and their driver-specific registration code.
+
+5. **Server**:
+   - The server validates both registration codes.
+   - If the codes are valid and not expired, the server allows the driver to proceed with creating their account (e.g., setting up a username and password).
+
+6. **FleetPilot App**:
+   - The driver completes the registration by providing additional required information (e.g., username, password).
+   - The FleetPilot app sends this information to the server to complete the registration.
+
+7. **Server**:
+   - The server registers the driver, links them to the corresponding company, and stores their credentials securely.
+   - The server sends a confirmation response to the FleetPilot app.
+
+8. **FleetPilot App**:
+   - The FleetPilot app displays a success message and logs the driver into the app.
+
+## Server API Endpoints
+
+### 1. Generate Registration Codes
+- **Endpoint**: `POST /api/v1/drivers/add`
+- **Request**:
+  ```json
+  {
+    "driverName": "John Doe",
+    "driverEmail": "johndoe@example.com",
+    "driverPhone": "+1234567890",
+    "companyId": 123
+  }
+
+
+## Detailed Steps and Server Responses
+
+1. **FleetMaster App Initiates Driver Addition**:
+   - **Request**: Send driver details to `POST /api/v1/drivers/add`.
+   - **Response**: Receive company and driver registration codes.
+
+2. **FleetPilot App Driver Registration**:
+   - **Request**: Driver enters registration codes and sends them to `POST /api/v1/registration/validate-codes`.
+   - **Response**: Receive validation response indicating if codes are valid or not.
+   - **Request**: If valid, driver completes registration and sends details to `POST /api/v1/registration/register`.
+   - **Response**: Receive confirmation of successful registration.
+
+## Summary
+
+This mechanism ensures that the process of adding and registering a driver is secure, user-friendly, and efficient. The use of both company-wide and driver-specific registration codes helps maintain security while ensuring that only authorized drivers can register with the system. The server handles the validation and registration processes, ensuring that all data is securely managed and stored.
+
 
 ### Mechanism Flow
 
@@ -34,22 +102,3 @@ with the access code. The driver will then be able to use the access code to reg
 address. The system will automatically send an email to the driver with an access code. The driver will then be able to use the access code to register and create an account in the Fleet Master application.
 First-time users are required to enter an access code and an organization name to be identified. Upon successful identification, the app will proceed with the startup.
 
-### Password Policy and Security Questions
-
-Once the customer has been identified in the previous step, a request is automatically sent to the server to retrieve the latest password policy and security questions based on a specific account number. This ensures that the application is up-to-date with the latest security measures.
-
-### Automatic User Registration
-
-The app will check if a user for that account is registered. If the user is not registered, the application will open a registration form on a new page, allowing the user to complete the registration process.
-
-### Login
-
-Once a user is registered, the Login page will become accessible, allowing the user to log in to the application.
-
-### Network Page
-
-If at any point there is a failure in communicating with the server, the application will open a network status page to inform the user of the connectivity issue.
-
-## Conclusion
-
-The initialization mechanism in the Fleet Master application is designed to ensure a secure and seamless startup experience for users. By enforcing password policies, facilitating automatic registration, and handling network issues gracefully, the application aims to provide a robust and user-friendly environment. This document provides an overview of the steps involved in the initialization process, ensuring that all users are guided through the necessary security and setup procedures upon starting the application.

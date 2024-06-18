@@ -47,7 +47,7 @@ To ensure a secure and efficient process for adding drivers in our client-server
 ## Server API Endpoints
 
 ### 1. Generate Registration Codes
-- **Endpoint**: `POST /api/v1/drivers/add`
+- **Endpoint**: `POST /api/v1/fleetmaster/drivers/add`
 - **Request**:
   ```json
   {
@@ -61,7 +61,7 @@ To ensure a secure and efficient process for adding drivers in our client-server
 ## Detailed Steps and Server Responses
 
 1. **FleetMaster App Initiates Driver Addition**:
-   - **Request**: Send driver details to `POST /api/v1/drivers/add`.
+   - **Request**: Send driver details to `POST /api/v1/driver/add`.
    - **Response**: Receive company and driver registration codes.
 
 2. **FleetPilot App Driver Registration**:

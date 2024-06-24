@@ -1,4 +1,4 @@
-# Initialization Mechanism
+# Push Notification Mechanism
 
 ## Introduction
 

@@ -5,28 +5,33 @@
 To ensure a secure and efficient process for adding drivers in our client-server application, we will define the interaction between the FleetMaster app, the FleetPilot app, and the server. This document outlines the flow of the operation and specifies the expectations for each client and the server responses.
 
 ## Flow of Operation
+![On board sequence diagram](/img/SD-OnBoard.png)
+<!--<ZoomableImage src="/img/SD-OnBoard.png" alt="On board sequence diagram" />-->
+
 
 ### Step 1: Fleet Manager Initiates Driver Addition
 
 1. **FleetMaster App**:
    - The fleet manager opens the FleetMaster app and navigates to the "Add Driver" section.
-   - The manager enters the driver’s details (e.g., name, email, phone number) and initiates the request to add a driver.
-   (Idea is to scan the driver's license and extract the information from the driver's license and send it to the server to initiate the on boarding process.)
+   - The manager enters the driver’s details (e.g., name, email, phone number) and sends to the server the request to add a driver.
 
 2. **Server**:
    - The server generates a unique company-wide registration code (if not already existing) and a driver-specific registration code.
-   - The server sends the registration codes (company-wide and driver-specific) back to the FleetMaster app.
-   - Optionally, the server can send an email or SMS to the driver with the registration codes and a link to download the FleetPilot app.
-
+   - The server sends to the driver an email or or SMS to the driver with the registration codes and a link to download the FleetPilot app
+   - The server stores the registration codes and associates them with the driver’s details.
+   - The server logs the request with a time stamp and the drivers'details.
+   - The server sends the registration codes (company-wide and driver-specific) back to the FleetMaster app with a confirmation that the notificatin was sent succesfully.
+   
 3. **FleetMaster App**:
    - The FleetMaster app displays a confirmation message with the driver’s registration code.
+   - The table pending actions is updated.
    - the notification success message is displayed to the fleet manager.
    
 
 ### Step 2: Driver Registers via FleetPilot App
 
 4. **FleetPilot App**:
-   - The driver opens the FleetPilot app and navigates to the registration screen.
+   - The driver launches the FleetPilot app, and an automated system detects if it is the first start attempt, directing the user to the initial registration screen.
    - The driver enters the company-wide registration code and their driver-specific registration code.
 
 5. **Server**:
@@ -40,9 +45,14 @@ To ensure a secure and efficient process for adding drivers in our client-server
 7. **Server**:
    - The server registers the driver, links them to the corresponding company, and stores their credentials securely.
    - The server sends a confirmation response to the FleetPilot app.
+   - The server logs the registration with a time stamp and the driver's details.
+   - The server sends a message to the FleetMaster app that the driver has successfully registered.
 
 8. **FleetPilot App**:
-   - The FleetPilot app displays a success message and logs the driver into the app.
+   - The FleetPilot app displays a success message and opens the login page.
+
+9. **FleetMaster App**:
+   - The FleetMaster app syncs the table pending actions.
 
 ## Server API Endpoints
 
@@ -70,11 +80,20 @@ To ensure a secure and efficient process for adding drivers in our client-server
    - **Request**: If valid, driver completes registration and sends details to `POST /api/v1/registration/register`.
    - **Response**: Receive confirmation of successful registration.
 
+   
+
+   
+
+
+
+
 ## Summary
 
 This mechanism ensures that the process of adding and registering a driver is secure, user-friendly, and efficient. The use of both company-wide and driver-specific registration codes helps maintain security while ensuring that only authorized drivers can register with the system. The server handles the validation and registration processes, ensuring that all data is securely managed and stored.
 
-
+## Ideas to consider
+   Administrator could directly scan the driver's license and extract the information from the driver's license and send it to the server to initiate the on boarding process.)
+   Fleet Pilot could include a mechanism to scan the driver's license and extract the information from the driver's license and send it to the server to initiate the on boarding process.
 ### Mechanism Flow
 
 A company administrator will be able to add a driver to the system by providing the driver's "Driver license"
